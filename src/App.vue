@@ -1,23 +1,26 @@
 
 <template>
   <div id="app" class="small-container">
-    <h1>Employee</h1>
+    <h1 id="head">Employee</h1>
 
+    <employee-form @add:employee="addEmployee" />
     <employee-table :employees="employees" />
   </div>
 </template>
 
 <script>
 import EmployeeTable from "@/components/EmployeeTable.vue";
+import EmployeeForm from "@/components/EmployeeForm.vue";
 export default {
-  name: "component-name",
+  name: "app",
   components: {
-    EmployeeTable
+    EmployeeTable,
+    EmployeeForm
   },
   data() {
     return {
       employees: [
-        {
+        /*{
           id: 1,
           name: "Andrew Simmons",
           email: "Andrewps339@gmail.com"
@@ -32,15 +35,27 @@ export default {
           name: "Jon Doe",
           email: "JDG@gmail.com"
         }
+        */
       ]
     };
+  },
+  methods: {
+    addEmployee(employee) {
+      const lastId =
+        this.employees.length > 0
+          ? this.employees[this.employees.length - 1].id
+          : 0;
+      const id = lastId + 1;
+      const newEmployee = { ...employee, id };
+      this.employees = [...this.employees, newEmployee];
+    }
   }
 };
 </script>
 
 <style>
 button {
-  background: lightcyan;
+  background: green;
   border: 1px solid darkred;
 }
 
